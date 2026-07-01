@@ -13,6 +13,9 @@ services:
     volumes:
       - ./app:/app
     restart: unless-stopped
+    networks:
+      - portal-network
+      - portal-login-sec 
 
   db:
     image: mysql:8.0
@@ -24,6 +27,16 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
+    networks:
+      - portal-network
+      - portal-login-sec
+
+networks:
+  portal-network:
+    driver: bridge
+  portal-login-sec:
+    external: true
+    name: portal-login-sec 
 
 volumes:
   mysql_data:

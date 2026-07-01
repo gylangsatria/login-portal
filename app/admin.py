@@ -14,6 +14,14 @@ def _admin_required():
     return None
 
 
+def _normalize_url(url):
+    """Ensure URL has a proper scheme, default to https if missing."""
+    url = url.strip()
+    if not url.startswith(('http://', 'https://', '//')):
+        url = 'https://' + url
+    return url
+
+
 def register_admin_routes(app):
     
     @app.route('/admin')
@@ -38,7 +46,7 @@ def register_admin_routes(app):
         app = Application(
             name=data.get('name'),
             description=data.get('description'),
-            url=data.get('url'),
+            url=_normalize_url(data.get('url', '')),
             icon=data.get('icon', 'fa-apple'),
             order=data.get('order', 0)
         )
@@ -59,7 +67,7 @@ def register_admin_routes(app):
         
         app.name = data.get('name', app.name)
         app.description = data.get('description', app.description)
-        app.url = data.get('url', app.url)
+        app.url = _normalize_url(data.get('url', app.url))
         app.icon = data.get('icon', app.icon)
         app.order = data.get('order', app.order)
         app.is_active = data.get('is_active', app.is_active)
