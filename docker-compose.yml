@@ -5,12 +5,9 @@ services:
     build: .
     container_name: portal_app
     ports:
-      - "5000:5000"
-    environment:
-      - MYSQL_HOST=db
-      - MYSQL_USER=portal_user
-      - MYSQL_PASSWORD=portal123
-      - MYSQL_DB=portal_db
+      - "${HOST_PORT:-5000}:5000"
+    env_file:
+      - .env
     depends_on:
       - db
     volumes:
@@ -20,11 +17,8 @@ services:
   db:
     image: mysql:8.0
     container_name: portal_db
-    environment:
-      - MYSQL_ROOT_PASSWORD=root123
-      - MYSQL_DATABASE=portal_db
-      - MYSQL_USER=portal_user
-      - MYSQL_PASSWORD=portal123
+    env_file:
+      - .env
     ports:
       - "3306:3306"
     volumes:
