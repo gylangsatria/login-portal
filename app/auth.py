@@ -38,6 +38,7 @@ def register_auth_routes(app):
             
             if user and check_password_hash(user.password, password):
                 login_user(user)
+                session.permanent = True  # 3 hour session timeout
                 
                 # Log login with validated IP
                 ip_address = get_client_ip(request)

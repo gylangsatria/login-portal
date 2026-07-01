@@ -176,3 +176,15 @@ def register_admin_routes(app):
         db.session.commit()
         
         return jsonify({'message': 'User berhasil dihapus'}), 200
+    
+    @app.route('/admin/logs')
+    @login_required
+    def admin_logs():
+        if current_user.role != 'admin':
+            flash('Akses ditolak!', 'error')
+            return redirect(url_for('portal'))
+        
+        from models import LoginLog
+        page = request.args.get('page', 1, type=int)
+        logs = LoginLog.query.order_by(LoginLog.login_time.desc()).paginate(page=page, per_page=20, error_out=False)
+        return render_template('admin_logs.html', logs=logs)

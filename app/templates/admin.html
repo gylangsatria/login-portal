@@ -95,9 +95,14 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <h5 class="mb-0"><i class="fas fa-users"></i> {{ _('user_management') }}</h5>
-                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                            <i class="fas fa-plus"></i> {{ _('add_user') }}
-                        </button>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="{{ url_for('admin_logs') }}" class="btn btn-info btn-sm">
+                                <i class="fas fa-history"></i> Login Logs
+                            </a>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                                <i class="fas fa-plus"></i> {{ _('add_user') }}
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

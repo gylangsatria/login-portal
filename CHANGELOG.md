@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.9] - 2026-07-01
+
+### Added
+- Session timeout 3 jam: user otomatis logout setelah 3 jam (`PERMANENT_SESSION_LIFETIME`)
+- Halaman Login Logs di admin (`GET /admin/logs`) dengan tabel login history
+- Template `admin_logs.html` dengan pagination
+- Tombol "Login Logs" di header card User Management pada admin panel
+- Kolom durasi login (menit) pada tabel logs
+
+### Changed
+- `main.py`: tambah `PERMANENT_SESSION_LIFETIME = timedelta(hours=3)`
+- `auth.py`: tambah `session.permanent = True` setelah login sukses
+- `admin.py`: route baru `admin_logs()` dengan pagination
+- Fungsi `_normalize_url()` untuk auto-prefix `https://` pada URL aplikasi (mencegah xdg-open)
+
 ## [0.8] - 2026-07-01
 
 ### Added

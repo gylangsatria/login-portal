@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, session
 from flask_login import current_user
 from dotenv import load_dotenv
 import os
+from datetime import timedelta
 
 load_dotenv()
 
@@ -13,6 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.getenv('MYSQL_USER
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=3)
 
 # Initialize database
 from database import db, login_manager, init_db
@@ -45,6 +47,12 @@ from settings import register_settings_routes
 register_auth_routes(app)
 register_admin_routes(app)
 register_settings_routes(app)
+
+# Auto-logout when session expires
+@app.before_request
+def check_session_timeout():
+    if current_user.is_authenticated and not session.get('_session_checked'):
+        session['_session_checked'] = True
 
 # Create database tables and seed default admin
 with app.app_context():

@@ -5,17 +5,19 @@ Aplikasi portal login berbasis Flask dengan panel admin, manajemen aplikasi, man
 ## Fitur
 
 - Autentikasi login/logout dengan Flask-Login
+- Session otomatis berakhir setelah 3 jam
 - Halaman portal untuk mengakses berbagai aplikasi
-- Panel admin untuk manajemen aplikasi dan user
+- Panel admin untuk manajemen aplikasi, user, dan login logs
 - Manajemen aplikasi (CRUD): tambah, edit, hapus aplikasi
 - Manajemen user (CRUD): tambah, edit, hapus user, reset password
+- Login logs dengan timestamp login/logout, durasi, dan IP address
 - Ganti password dan nama sendiri melalui halaman settings
 - Multi bahasa: Indonesia dan Inggris (dapat dipilih di settings)
-- Logging login dengan IP address dan timestamp
 - Rate limiting login untuk mencegah brute force
 - Responsive design (mobile, tablet, desktop)
 - Sticky footer di semua halaman
 - Auto-migrasi kolom database
+- Auto-normalisasi URL aplikasi (tambah https:// jika tidak ada)
 
 ## Tech Stack
 
@@ -139,6 +141,7 @@ Semua konfigurasi dilakukan melalui file `.env`:
 | POST | `/admin/apps` | Tambah aplikasi |
 | PUT | `/admin/apps/<id>` | Edit aplikasi |
 | DELETE | `/admin/apps/<id>` | Hapus aplikasi |
+| GET | `/admin/logs` | Login logs (pagination) |
 | POST | `/admin/users` | Tambah user |
 | PUT | `/admin/users/<id>` | Edit user |
 | DELETE | `/admin/users/<id>` | Hapus user |
