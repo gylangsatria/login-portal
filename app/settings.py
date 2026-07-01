@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import db
 from i18n import build_translator
+from auth import validate_password_strength
 
 
 def register_settings_routes(app):
@@ -14,6 +15,9 @@ def register_settings_routes(app):
         t = build_translator(lang)
 
         if request.method == 'POST':
+            from security import validate_csrf_token
+            validate_csrf_token()
+
             action = request.form.get('action')
 
             # Change full name
@@ -35,14 +39,18 @@ def register_settings_routes(app):
 
                 if not check_password_hash(current_user.password, current_pwd):
                     flash(t('settings_password_wrong'), 'error')
-                elif len(new_pwd) < 6:
-                    flash(t('settings_password_short'), 'error')
-                elif new_pwd != confirm_pwd:
-                    flash(t('settings_password_mismatch'), 'error')
                 else:
-                    current_user.password = generate_password_hash(new_pwd)
-                    db.session.commit()
-                    flash(t('settings_password_updated'), 'success')
+                    pwd_error = validate_password_strength(new_pwd)
+                    if pwd_error:
+                        flash(pwd_error, 'error')
+                    elif new_pwd != confirm_pwd:
+                        flash(t('settings_password_mismatch'), 'error')
+                    elif check_password_hash(current_user.password, new_pwd):
+                        flash('Password baru tidak boleh sama dengan password lama!', 'error')
+                    else:
+                        current_user.password = generate_password_hash(new_pwd)
+                        db.session.commit()
+                        flash(t('settings_password_updated'), 'success')
                 return redirect(url_for('settings'))
 
             # Change language

@@ -92,15 +92,15 @@ TRANSLATIONS = {
         'settings_name_empty': 'Nama tidak boleh kosong!',
         'settings_password_updated': 'Password berhasil diubah!',
         'settings_password_wrong': 'Password saat ini salah!',
-        'settings_password_short': 'Password baru minimal 6 karakter!',
+        'settings_password_short': 'Password baru minimal 8 karakter, harus mengandung huruf dan angka!',
         'settings_password_mismatch': 'Konfirmasi password tidak cocok!',
         'settings_language_updated': 'Bahasa berhasil diubah!',
         'language_id': 'Bahasa Indonesia',
         'language_en': 'English',
-        'password_min_length': 'Minimal 6 karakter',
+        'password_min_length': 'Minimal 8 karakter, huruf dan angka',
         
         # Version & Credit
-        'version': 'Portal Aplikasi v0.7',
+        'version': 'Portal Aplikasi v1.0',
         'created_by': 'Dibuat oleh',
         
         # Tables
@@ -204,15 +204,15 @@ TRANSLATIONS = {
         'settings_name_empty': 'Name cannot be empty!',
         'settings_password_updated': 'Password changed successfully!',
         'settings_password_wrong': 'Current password is wrong!',
-        'settings_password_short': 'New password must be at least 6 characters!',
+        'settings_password_short': 'New password must be at least 8 characters with letters and numbers!',
         'settings_password_mismatch': 'Password confirmation does not match!',
         'settings_language_updated': 'Language changed successfully!',
         'language_id': 'Bahasa Indonesia',
         'language_en': 'English',
-        'password_min_length': 'Minimum 6 characters',
+        'password_min_length': 'Min 8 chars, letters and numbers',
         
         # Version & Credit
-        'version': 'Application Portal v0.7',
+        'version': 'Application Portal v1.0',
         'created_by': 'Created by',
         
         # Tables

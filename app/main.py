@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask, session, request, abort
 from flask_login import current_user
 from dotenv import load_dotenv
 import os
@@ -14,7 +14,33 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.getenv('MYSQL_USER
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = os.getenv('FLASK_DEBUG', '0') != '1'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=3)
+app.config['ALLOWED_HOSTS'] = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+
+# CSRF token injection for all templates
+from security import generate_csrf_token
+@app.context_processor
+def inject_csrf():
+    return dict(csrf_token=generate_csrf_token())
+
+# Host header validation
+@app.before_request
+def validate_host():
+    host = request.headers.get('Host', '').split(':')[0]
+    allowed = app.config['ALLOWED_HOSTS']
+    if host and host not in allowed and host != 'localhost' and not host.startswith('192.168.') and not host.startswith('10.'):
+        abort(403)
+
+# Security headers
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    response.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
+    return response
 
 # Initialize database
 from database import db, login_manager, init_db

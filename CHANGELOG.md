@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0] - 2026-07-01
+
+### Added
+- CSRF token protection untuk semua form (`security.py`)
+- Rate limiting login: 5x gagal = block 15 menit
+- Password policy: minimal 8 karakter, harus mengandung huruf dan angka
+- Security headers: X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy
+- Host header validation via `ALLOWED_HOSTS` (configurable di .env)
+- Session Secure flag aktif saat production (FLASK_DEBUG=0)
+- File `app/security.py` untuk CSRF token
+
+### Changed
+- Validasi password lama != password baru saat ganti password
+- Update i18n pesan password (minimal 8 karakter + huruf/angka)
+- Update template minlength 6 -> 8
+- Refactor CSRF dari main.py ke security.py (hindari circular import)
+
 ## [0.9] - 2026-07-01
 
 ### Added

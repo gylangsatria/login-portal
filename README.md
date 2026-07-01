@@ -13,7 +13,12 @@ Aplikasi portal login berbasis Flask dengan panel admin, manajemen aplikasi, man
 - Login logs dengan timestamp login/logout, durasi, dan IP address
 - Ganti password dan nama sendiri melalui halaman settings
 - Multi bahasa: Indonesia dan Inggris (dapat dipilih di settings)
-- Rate limiting login untuk mencegah brute force
+- **CSRF Protection** -- Token acak per session di semua form
+- **Rate limiting** -- 5x gagal login = block 15 menit
+- **Password policy** -- Minimal 8 karakter, huruf dan angka
+- **Security headers** -- X-Frame-Options, X-Content-Type-Options, dll
+- **Host validation** -- Whitelist host via ALLOWED_HOSTS
+- Session cookie Secure (hanya via HTTPS saat production)
 - Responsive design (mobile, tablet, desktop)
 - Sticky footer di semua halaman
 - Auto-migrasi kolom database
@@ -53,6 +58,7 @@ portal-login/
 │   ├── settings.py              # Routes settings (ganti nama, password, bahasa)
 │   ├── database.py              # Inisialisasi SQLAlchemy & LoginManager
 │   ├── models.py                # Model database (User, LoginLog, Application)
+│   ├── security.py              # CSRF token protection
 │   └── i18n.py                  # Sistem translasi (Indonesia/Inggris)
 ├── docker-compose.yml           # Orkestrasi container (web + db)
 ├── Dockerfile                   # Build image Python
@@ -120,6 +126,7 @@ Semua konfigurasi dilakukan melalui file `.env`:
 | `SECRET_KEY` | - | Secret key Flask (wajib diisi) |
 | `FLASK_DEBUG` | `0` | Mode debug (1 = aktif) |
 | `ADMIN_PASSWORD` | `admin123` | Password default admin |
+| `ALLOWED_HOSTS` | `localhost,127.0.0.1` | Daftar host yang diizinkan (dipisah koma) |
 
 ## API Endpoints
 
