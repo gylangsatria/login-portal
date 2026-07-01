@@ -178,4 +178,15 @@ Lihat [CHANGELOG.md](CHANGELOG.md) untuk riwayat perubahan lengkap.
 
 ## Lisensi
 
-Hak cipta milik developer. Digunakan untuk keperluan internal.
+Hak Cipta © 2026 Gylang Satria Yudha
+
+Proyek ini dilisensikan di bawah Lisensi MIT - lihat file LICENSE.md untuk detail lengkap.
+
+Dengan lisensi ini, Anda bebas untuk:
+
+- Menggunakan untuk keperluan pribadi atau komersial
+- Memodifikasi dan mengadaptasi sesuai kebutuhan
+-  Mendistribusikan ulang
+-  Mensublisensikan di bawah lisensi lain
+
+Tanpa batasan, selama Anda menyertakan pemberitahuan hak cipta dan izin ini dalam semua salinan.
