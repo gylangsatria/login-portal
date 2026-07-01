@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: portal_app
+    ports:
+      - "5000:5000"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=portal_user
+      - MYSQL_PASSWORD=portal123
+      - MYSQL_DB=portal_db
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    container_name: portal_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=portal_db
+      - MYSQL_USER=portal_user
+      - MYSQL_PASSWORD=portal123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
